@@ -1,4 +1,5 @@
 'use client';
+import { SocialButtons } from '@/components/auth/social-buttons';
 import { CustomInput } from '@/components/shared/custom-input';
 import { AppleIcon, GoogleIcon } from '@/components/shared/icons';
 import { Button } from '@/components/ui/button';
@@ -167,19 +168,7 @@ export function SignUpForm({
         <FieldSeparator className='*:data-[slot=field-separator-content]:bg-card'>
           Or continue with
         </FieldSeparator>
-        <Field className='grid grid-cols-2 gap-4'>
-          <Button variant='outline' type='button'>
-            <AppleIcon />
-            <span className='sr-only'>Login with Apple</span>
-          </Button>
-          <Button variant='outline' type='button'>
-            <GoogleIcon />
-            <span className='sr-only'>Login with Google</span>
-          </Button>
-        </Field>
-        <FieldDescription className='text-center'>
-          Don&apos;t have an account? <a href='#'>Sign up</a>
-        </FieldDescription>
+        <SocialButtons/> 
       </FieldGroup>
     </form>
   );

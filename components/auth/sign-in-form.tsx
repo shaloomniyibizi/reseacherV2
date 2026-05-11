@@ -1,10 +1,9 @@
 'use client';
+import { SocialButtons } from '@/components/auth/social-buttons';
 import { CustomInput } from '@/components/shared/custom-input';
-import { AppleIcon, GoogleIcon } from '@/components/shared/icons';
 import { Button } from '@/components/ui/button';
 import {
   Field,
-  FieldDescription,
   FieldError,
   FieldGroup,
   FieldSeparator,
@@ -17,6 +16,7 @@ import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import z from 'zod';
+import Link from 'next/link'
 
 const SignInSchema = z.object({
   email: z.email('Please enter a valid email address.'),
@@ -28,6 +28,7 @@ export function SignInForm({
   className,
   ...props
 }: React.ComponentProps<'form'>) {
+
   const [loading, setLoading] = useState(false);
 
   const form = useForm<z.infer<typeof SignInSchema>>({
@@ -99,10 +100,18 @@ export function SignInForm({
                 placeholder='Password'
                 error={fieldState.error?.message}
               />
+              
+              <Link 
+                    href="#"
+                    className="text-right text-sm underline-offset-2 hover:underline"
+                  >
+                    Forgot your password?
+                  </Link >
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
         />
+         
         <Controller
           name='rememberMe'
           control={form.control}
@@ -133,19 +142,7 @@ export function SignInForm({
         <FieldSeparator className='*:data-[slot=field-separator-content]:bg-card'>
           Or continue with
         </FieldSeparator>
-        <Field className='grid grid-cols-2 gap-4'>
-          <Button variant='outline' type='button'>
-            <AppleIcon />
-            <span className='sr-only'>Login with Apple</span>
-          </Button>
-          <Button variant='outline' type='button'>
-            <GoogleIcon />
-            <span className='sr-only'>Login with Google</span>
-          </Button>
-        </Field>
-        <FieldDescription className='text-center'>
-          Don&apos;t have an account? <a href='#'>Sign up</a>
-        </FieldDescription>
+        <SocialButtons />
       </FieldGroup>
     </form>
   );
