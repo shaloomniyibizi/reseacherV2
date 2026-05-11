@@ -160,9 +160,11 @@ export function CustomInput({
             value={(value as string) ?? ''}
             onChange={onChange}
             disabled={disabled}
-            inputClass='!h-11 !w-full !rounded-xl !border-input !bg-background'
-            buttonClass='!border-input !bg-background'
-            containerClass='!w-full'
+            inputClass='!h-9 !w-full !border-0 !border-b  !border-input 
+            !rounded  !bg-accent/65 !text-accent-foreground px-2 py-1 !text-sm !shadow-sm !transition-colors !placeholder:text-muted-foreground !focus-visible:outline-none !focus-visible:ring-0 !border-b-2  !focus-visible:border-b-primary !disabled:cursor-not-allowed !disabled:opacity-50'
+            buttonClass='!border-0 !border-b !border-input !bg-accent/65 !text-accent-foreground hover:!bg-accent hover:!text-accent-foreground focus:!bg-accent focus:!text-accent-foreground !transition-colors'
+            containerClass='!w-full !bg-accent/65 !text-accent-foreground'
+            dropdownClass='!bg-background !text-foreground !border-border !shadow-lg [&_.country:hover]:!bg-accent [&_.country:hover]:!text-accent-foreground [&_.country.highlight]:!bg-primary [&_.country.highlight]:!text-primary-foreground [&_.search]:!bg-background [&_.search]:!text-foreground [&_.search]:!border-border [&_.search-box]:!bg-background [&_.search-box]:!text-foreground [&_.search-box]:!border-border'
           />
         );
 

@@ -1,11 +1,9 @@
 'use client';
 import { SocialButtons } from '@/components/auth/social-buttons';
 import { CustomInput } from '@/components/shared/custom-input';
-import { AppleIcon, GoogleIcon } from '@/components/shared/icons';
 import { Button } from '@/components/ui/button';
 import {
   Field,
-  FieldDescription,
   FieldError,
   FieldGroup,
   FieldSeparator,
@@ -14,7 +12,6 @@ import { signUp } from '@/lib/auth-client';
 import { cn } from '@/lib/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2, UserPlus } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -24,6 +21,7 @@ const signupSchema = z
   .object({
     name: z.string().min(1, 'Name is required.'),
     email: z.email('Please enter a valid email address.'),
+    phoneNumber: z.string().min(10, 'Phone number must be 10 number'),
     password: z.string().min(8, 'Password must be at least 8 characters'),
     confirmPassword: z.string(),
   })
@@ -37,13 +35,13 @@ export function SignUpForm({
   ...props
 }: React.ComponentProps<'form'>) {
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
 
   const form = useForm<z.infer<typeof signupSchema>>({
     resolver: zodResolver(signupSchema),
     defaultValues: {
       name: '',
       email: '',
+      phoneNumber: '',
       password: '',
       confirmPassword: '',
     },
@@ -55,11 +53,12 @@ export function SignUpForm({
         name: data.name,
         email: data.email,
         password: data.password,
+        phoneNumber: data.phoneNumber,
+        callbackURL: '/dashboard',
       },
       {
         onSuccess: () => {
           toast.success('Sign up successful!');
-          router.push('/dashboard');
         },
         onError: (error) => {
           toast.error(error.error.message || 'Something went wrong.');
@@ -108,6 +107,21 @@ export function SignUpForm({
                 {...field}
                 type='email'
                 placeholder='Enter your email'
+                error={fieldState.error?.message}
+              />
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
+        <Controller
+          name='phoneNumber'
+          control={form.control}
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <CustomInput
+                {...field}
+                type='phone'
+                placeholder='Enter your phone number'
                 error={fieldState.error?.message}
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
@@ -168,7 +182,7 @@ export function SignUpForm({
         <FieldSeparator className='*:data-[slot=field-separator-content]:bg-card'>
           Or continue with
         </FieldSeparator>
-        <SocialButtons/> 
+        <SocialButtons />
       </FieldGroup>
     </form>
   );
