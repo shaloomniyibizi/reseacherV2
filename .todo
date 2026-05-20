@@ -1,0 +1,11 @@
+{
+  "tasks": [
+    {
+      "id": "1779100152806ee7te",
+      "title": "Review blocked/reverted work in components/web/aside-bar.tsx",
+      "category": "Blocked",
+      "dueDate": null,
+      "completed": false
+    }
+  ]
+}
